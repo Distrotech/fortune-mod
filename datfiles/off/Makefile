@@ -24,9 +24,9 @@ rotated-stamp:
 	touch rotated-stamp
 
 install:
-	install -m 0755 -d $(OCOOKIEDIR)
+	install -m 0755 -d $(DESTDIR)$(OCOOKIEDIR)
 	for i in $(OCOOKIES) ; \
-	    do install -m 0644 $$i $$i.dat $(OCOOKIEDIR) || exit $$? ; done
+	    do install -m 0644 $$i $$i.dat $(DESTDIR)$(OCOOKIEDIR) || exit $$? ; done
 
 clean:
 	rm -f ocookies-stamp rotated-stamp *.dat $(OCOOKIES_UNROTATED)

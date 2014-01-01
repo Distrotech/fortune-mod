@@ -15,7 +15,7 @@ cookies: cookies-stamp
 
 o-cookies:
 	if [ $(OFFENSIVE) = 1 ] ; then \
-	    cd off && $(MAKE) OCOOKIEDIR=$(OCOOKIEDIR) ; fi
+	    cd off && $(MAKE) OCOOKIEDIR=$(OCOOKIEDIR) DESTDIR=$(DESTDIR); fi
 
 w-cookies:
 	if [ $(WEB) = 1 ] ; then \
