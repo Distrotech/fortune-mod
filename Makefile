@@ -2,25 +2,27 @@
 # Makefile for fortune-mod
 #
 
+PREFIX=/usr
+
 # Where does the fortune program go?
-FORTDIR=/usr/local/games
+FORTDIR=$(PREFIX)/bin
 # Where do the data files (fortunes, or cookies) go?
-COOKIEDIR=/usr/local/share/games/fortunes
+COOKIEDIR=$(PREFIX)/share/games/fortunes
 # Offensive ones?
 OCOOKIEDIR=$(COOKIEDIR)/off
 # The ones with html tags?
 WCOOKIEDIR=$(COOKIEDIR)/html
 # Where do strfile and unstr go?
-BINDIR=/usr/local/bin
+BINDIR=$(PREFIX)/bin
 # What is the proper mode for strfile and unstr? 755= everyone, 700= root only
 BINMODE=0755
 #BINMODE=0700
 # Where do the man pages for strfile and unstr go?
-BINMANDIR=/usr/local/man/man1
+BINMANDIR=$(PREFIX)/share/man/man1
 # What is their proper extension?
 BINMANEXT=1
 # And the same for the fortune man page
-FORTMANDIR=/usr/local/man/man6
+FORTMANDIR=$(PREFIX)/man/man6
 FORTMANEXT=6
 # Do we want to install the offensive files? (0 no, 1 yes)
 OFFENSIVE=1
@@ -128,14 +130,14 @@ install: install-fortune install-util install-man install-cookie
 
 # Install just the fortune program
 install-fortune: fortune-bin
-	install -m 0755 -d $(FORTDIR)
-	install -m 0755 fortune/fortune $(FORTDIR)
+	install -m 0755 -d $(DESTDIR)$(FORTDIR)
+	install -m 0755 fortune/fortune $(DESTDIR)$(FORTDIR)
 
 # Install just the utilities strfile and unstr
 install-util: util-bin
-	install -m 0755 -d $(BINDIR)
-	install -m $(BINMODE) util/strfile $(BINDIR)
-	install -m $(BINMODE) util/unstr $(BINDIR)
+	install -m 0755 -d $(DESTDIR)$(BINDIR)
+	install -m $(BINMODE) util/strfile $(DESTDIR)$(BINDIR)
+	install -m $(BINMODE) util/unstr $(DESTDIR)$(BINDIR)
 
 # Install all the man pages
 install-man: install-fman install-uman
@@ -155,21 +157,21 @@ fortune/fortune.man: fortune/fortune-man.part1 fortune/fortune-man.part2
 
 # Install the fortune man pages
 install-fman: fortune/fortune.man
-	install -m 0755 -d $(FORTMANDIR)
-	install -m 0644 fortune/fortune.man $(FORTMANDIR)/fortune.$(FORTMANEXT)
+	install -m 0755 -d $(DESTDIR)$(FORTMANDIR)
+	install -m 0644 fortune/fortune.man $(DESTDIR)$(FORTMANDIR)/fortune.$(FORTMANEXT)
 
 # Install the utilities man pages
 install-uman:
-	install -m 0755 -d $(BINMANDIR)
-	install -m 0644 util/strfile.man $(BINMANDIR)/strfile.$(BINMANEXT)
-	rm -f $(BINMANDIR)/unstr.$(BINMANEXT)
-	ln -s strfile.$(BINMANEXT) $(BINMANDIR)/unstr.$(BINMANEXT)
+	install -m 0755 -d $(DESTDIR)$(BINMANDIR)
+	install -m 0644 util/strfile.man $(DESTDIR)$(BINMANDIR)/strfile.$(BINMANEXT)
+	rm -f $(DESTDIR)$(BINMANDIR)/unstr.$(BINMANEXT)
+	ln -s strfile.$(BINMANEXT) $(DESTDIR)$(BINMANDIR)/unstr.$(BINMANEXT)
 
 # Install the fortune cookie files
 install-cookie: cookies-z
 	cd datfiles && $(MAKE) COOKIEDIR=$(COOKIEDIR) \
 		    OCOOKIEDIR=$(OCOOKIEDIR) WCOOKIEDIR=$(WCOOKIEDIR) \
-		    OFFENSIVE=$(OFFENSIVE) WEB=$(WEB) install
+		    OFFENSIVE=$(OFFENSIVE) WEB=$(WEB) DESTDIR=$(DESTDIR) install
 
 clean:
 	for i in $(SUBDIRS) ; do (cd $$i && $(MAKE) clean); done

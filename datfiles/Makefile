@@ -27,11 +27,11 @@ cookies-stamp:
 	touch cookies-stamp
 
 install: cookies-stamp
-	install -m 0755 -d $(COOKIEDIR)
+	install -m 0755 -d $(DESTDIR)$(COOKIEDIR)
 	if [ $(OFFENSIVE) = 1 ] ; then cd off && $(MAKE) install ; fi
 	if [ $(WEB) = 1 ] ; then cd html && $(MAKE) install ; fi
 	for i in $(COOKIES) ; do \
-		install -m 0644 $$i $$i.dat $(COOKIEDIR) || exit $? ; done
+		install -m 0644 $$i $$i.dat $(DESTDIR)$(COOKIEDIR) || exit $? ; done
 
 clean:
 	rm -f cookies-stamp *.dat
