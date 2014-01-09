@@ -5,6 +5,8 @@
 # and make install-uman.  make clean will work properly if called in
 # this directory.
 
+HOSTCC = gcc
+
 all: strfile unstr rot
 
 strfile: strfile.o

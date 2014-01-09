@@ -6,6 +6,10 @@
 #include <stdio.h>
 #include <ctype.h>
 
+#ifndef EOF
+#define EOF	-1
+#endif
+
 int main(void)
 {
     char a, b;

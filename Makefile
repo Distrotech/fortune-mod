@@ -22,7 +22,7 @@ BINMANDIR=$(PREFIX)/share/man/man1
 # What is their proper extension?
 BINMANEXT=1
 # And the same for the fortune man page
-FORTMANDIR=$(PREFIX)/man/man6
+FORTMANDIR=$(PREFIX)/share/man/man6
 FORTMANEXT=6
 # Do we want to install the offensive files? (0 no, 1 yes)
 OFFENSIVE=1
